@@ -12,5 +12,5 @@ A Python service that uses Flask to act as a geometry engine, capable of perform
 4. **check_convex:** Given a polygon in a 3D space represented by 3D Points, check whether the polygon is convex.  
 
 ## Instructions (Linux/macOS only):
--run ./setup_and_run.sh  
--perform geometric operations. See **example.py** or **example.sh** for example usage
+*run ./setup_and_run.sh  
+*perform geometric operations. See **example.py** or **example.sh** for example usage
