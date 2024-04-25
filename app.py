@@ -5,8 +5,6 @@ import numpy as np
 
 app = Flask(__name__)
 
-
-
 @app.route('/move_mesh', methods=['GET','POST'])
 def move_mesh_endpoint():
     data = utils.parse_request(request)
