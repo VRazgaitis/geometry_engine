@@ -22,7 +22,7 @@ Given a polygon in a 3D space represented by 3D Points, check whether the polygo
 A convex polygon is defined as a closed figure where all interior angles are less than 180 degrees.  
 Returns a **boolean** value in JSON format  
   
-![image](https://github.com/VRazgaitis/geometry_engine/assets/116982063/30699b48-926f-4ee8-afd3-96708a35aac9)
+![image](/images/convex_polygon.png)
 
 ## Instructions (Linux/macOS only)
 * run ./setup_and_run.sh  
