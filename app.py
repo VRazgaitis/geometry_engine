@@ -25,3 +25,25 @@ def move_mesh_endpoint():
                        data.get('y',0.0), 
                        data.get('z',0.0))
     return jsonify({'mesh': result})
+
+@app.route('/rotate_mesh', methods=['GET','POST'])
+def rotate_mesh_endpoint():
+    data = parse_request(request)
+    # Error check angle
+    try:
+        angle = float(data.get('angle', 0))
+    except ValueError:
+        return jsonify({'error': 'Invalid angle provided. Angle must be a numeric value.'}), 400
+    # Error check rotation axis character
+    axis = data.get('axis', 'x')
+    if axis not in ('x', 'X', 'y', 'Y', 'z', 'Z'):
+        return jsonify({'error': 'Invalid rotation axis. Axis must be one of x, X, y, Y, z, Z.'}), 400
+    # TODO: error check mesh 
+    mesh = np.array(data['mesh'])
+    result = geometry_engine.rotate_mesh(mesh, 
+                       angle,
+                       axis)
+    return jsonify({'mesh': result})
+
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -58,3 +58,15 @@ def test_move_mesh_no_transform():
     
     moved_mesh = geometry_engine.move_mesh(mesh)
     assert np.array_equal(moved_mesh, expected_mesh)
+
+def test_rotate_mesh():
+    mesh = np.array([[1, 0, 0],
+                   [0, 1, 0],
+                   [0, 0, 1]])
+    
+    expected_mesh = np.array([[1, 0, 0],
+                       [0, 0.98480775, -0.17364818],
+                       [0, 0.17364818, 0.98480775]])
+    
+    rotated_mesh = geometry_engine.rotate_mesh(mesh, angle=-10, axis='x')
+    assert np.allclose(rotated_mesh, expected_mesh, atol=1e-8)
