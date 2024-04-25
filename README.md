@@ -18,11 +18,12 @@ Returns a JSON of **moved** 3D coordinate points,
 [[x<sub>1</sub>, y<sub>1</sub>, z<sub>1</sub>], [x<sub>2</sub>, y<sub>2</sub>, z<sub>2</sub>], [...]]   
 
 #### Check Convex 
-Given a polygon in a 3D space represented by 3D Points, check whether the polygon is convex.  
+Given a polygon in 3D space represented by 3D Points, checks whether the polygon is convex.  
 A convex polygon is defined as a closed figure where all interior angles are less than 180 degrees.  
 Returns a **boolean** value in JSON format  
-  
-![image](/images/convex_polygon.png)
+
+    
+<img src="images/convex_polygon.png" width="65%" alt="Convex VS Concave Polygon">
 
 ## Instructions (Linux/macOS only)
 * run ./setup_and_run.sh  
