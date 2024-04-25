@@ -45,5 +45,11 @@ def rotate_mesh_endpoint():
                        axis)
     return jsonify({'mesh': result})
 
+@app.route('/check_convex', methods=['GET','POST'])
+def check_convex_endpoint():
+    data = parse_request(request)
+    mesh = np.array(data['mesh'])
+    return jsonify({'Convex polygon': geometry_engine.check_convex(mesh)})
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -66,3 +66,36 @@ def rotate_mesh(mesh, angle, axis):
     # Perform rotation
     rotated_mesh = mesh.copy()
     return rotation_matrix.dot(rotated_mesh.T).T.tolist()
+
+def check_convex(mesh):
+    """
+    Given a polygon in a 3D space represented by 3D Points, returns True if the polygon is convex.
+    A polygon is convex if all internal angles are at most 180 degrees.
+    """
+    n = len(mesh)
+    if n < 3:
+        return False
+    # Calculate consecutive edge vectors and cross products 
+    normals = []
+    for i in range(n):
+        # get a vector from edge i to i+1
+        edge_1 = mesh[(i + 1) % n] - mesh[i]
+        # get a vector from edge i+1 to i+2
+        edge_2 = mesh[(i + 2) % n] - mesh[(i + 1) % n]
+        # get the cross product of edge_1 x edge_2
+        normal = np.cross(edge_1, edge_2)
+        if np.linalg.norm(normal) == 0:
+            continue #skip parallel edges
+        normals.append(normal)
+    
+    # check the direction of the normals
+    if not normals:
+        return False
+    
+    # all positive dot products signify that the normal vectors are all in the same direction
+    reference_normal = normals[0]
+    for normal in normals[1:]:
+        if np.dot(reference_normal, normal) <= 0:
+            # at least one edge whose normal points opposite to the reference normal
+            return False
+    return True
