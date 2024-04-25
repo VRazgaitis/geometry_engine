@@ -22,10 +22,10 @@ Given a polygon in 3D space represented by 3D Points, checks whether the polygon
 A convex polygon is defined as a closed figure where all interior angles are less than 180 degrees.  
 Returns a **boolean** value in JSON format  
 
-    
-<img src="images/convex_polygon.png" width="65%" alt="Convex VS Concave Polygon">
-
+  
+<img src="images/convex_polygon.png" width="50%" alt="Convex VS Concave Polygon">
+  
 ## Instructions (Linux/macOS only)
-* run ./setup_and_run.sh  
-* Compute geometric operations, using HTTP GET or POST requests.
+* run **./setup_and_run.sh** to run the web application locally  
+* Compute geometric operations, using HTTP GET or POST requests
 * See **example.py** or **example.sh** for example usage
