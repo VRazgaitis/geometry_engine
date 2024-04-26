@@ -101,7 +101,7 @@ def check_convex(mesh):
             return False
     return True
 
-def compute_bounding_box(mesh):
+def compute_bounding_box(mesh, show_plot=False):
     points = mesh.T  # transpose for means
     means = np.mean(points, axis=1)
     covariance_matrix = np.cov(points)  # diagonals represent clustering about each mean
@@ -123,11 +123,9 @@ def compute_bounding_box(mesh):
         [y1, y2, y2, y1, y1, y2, y2, y1],
         [z1, z1, z1, z1, z2, z2, z2, z2]])
     
-    # TO DELETE: POINTS UN-ROTATED
-    #----------------------------------------
-    # undo the rotations on coordinate points
+    # FOR PLOTTING:
+    # undo the rotations, movement on coordinate points
     realigned_coords = np.matmul(eigenvectors, rotated_coordinates)
-    # undo the movement of coordinate points to be centered on the origin
     realigned_coords += means[:, np.newaxis]
     
     # un-align the bounding box from the rotated points
@@ -135,7 +133,37 @@ def compute_bounding_box(mesh):
         rectangle_coordinates(xmin, ymin, zmin, xmax, ymax, zmax))
     # move box from being centered about the cartesian origin
     bounding_box_coords += means[:, np.newaxis] 
+    if show_plot:
+        plot_bounding_box(realigned_coords, bounding_box_coords)
     return bounding_box_coords.T.tolist()
+
+def plot_bounding_box(realigned_coords, bounding_box_coords):
+    """
+    Plots a minimum volume bounding box superimposed on top of mesh points
+    """
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.scatter(realigned_coords[0,:], realigned_coords[1,:], realigned_coords[2,:], label="rotation and translation undone")
+    ax.legend()
+
+    # z1 plane boundary
+    ax.plot(bounding_box_coords[0, 0:2], bounding_box_coords[1, 0:2], bounding_box_coords[2, 0:2], color='b')
+    ax.plot(bounding_box_coords[0, 1:3], bounding_box_coords[1, 1:3], bounding_box_coords[2, 1:3], color='b')
+    ax.plot(bounding_box_coords[0, 2:4], bounding_box_coords[1, 2:4], bounding_box_coords[2, 2:4], color='b')
+    ax.plot(bounding_box_coords[0, [3,0]], bounding_box_coords[1, [3,0]], bounding_box_coords[2, [3,0]], color='b')
+
+    # z2 plane boundary
+    ax.plot(bounding_box_coords[0, 4:6], bounding_box_coords[1, 4:6], bounding_box_coords[2, 4:6], color='b')
+    ax.plot(bounding_box_coords[0, 5:7], bounding_box_coords[1, 5:7], bounding_box_coords[2, 5:7], color='b')
+    ax.plot(bounding_box_coords[0, 6:], bounding_box_coords[1, 6:], bounding_box_coords[2, 6:], color='b')
+    ax.plot(bounding_box_coords[0, [7, 4]], bounding_box_coords[1, [7, 4]], bounding_box_coords[2, [7, 4]], color='b')
+
+    # z1 and z2 connecting boundaries
+    ax.plot(bounding_box_coords[0, [0, 4]], bounding_box_coords[1, [0, 4]], bounding_box_coords[2, [0, 4]], color='b')
+    ax.plot(bounding_box_coords[0, [1, 5]], bounding_box_coords[1, [1, 5]], bounding_box_coords[2, [1, 5]], color='b')
+    ax.plot(bounding_box_coords[0, [2, 6]], bounding_box_coords[1, [2, 6]], bounding_box_coords[2, [2, 6]], color='b')
+    ax.plot(bounding_box_coords[0, [3, 7]], bounding_box_coords[1, [3, 7]], bounding_box_coords[2, [3, 7]], color='b')
+    plt.show()
 
 assert_against = np.array([
     [2.9332705452110419, 14.005997384948117, 6.1899642452550392], 
@@ -170,6 +198,16 @@ mesh = np.array([
     [14.465720748779876, 2.6650323990844091, 23.731571900586438]
     ])
 
+bb_points = np.array([
+             [4.1949637777057571, -6.9916062961762613, 16.047420986034020], 
+             [6.8206194998754439, -4.0247156045330703, 16.598321750671875], 
+             [-0.48443183668373879, 1.7688355092261352, 20.213704228708519], 
+             [-3.1100875588534249, -1.1980551824170558, 19.662803464070663], 
+             [3.4299717028501773, 2.0579830217101063, -6.6613381477509392e-16], 
+             [-3.8750796337090048, 7.8515341354693104, 3.6153824780366430], 
+             [0.80431598068049104, -0.90890766993308547, -0.55090076463785609],
+             [-6.5007353558786898, 4.8846434438261213, 3.0644817133987878]])
+
 concave_3d = np.array([
                             [0, 0, 1],
                             [2, 0, 2],
@@ -181,5 +219,4 @@ concave_3d = np.array([
                             [0, 3, 3],
                             [0, 0, 1]])   
   
-pprint.pprint(compute_bounding_box(mesh))
-
+# pprint.pprint(compute_bounding_box(bb_points, show_plot=True))
