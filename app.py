@@ -36,6 +36,10 @@ def rotate_mesh_endpoint():
 @app.route('/check_convex', methods=['GET','POST'])
 def check_convex_endpoint():
     data = utils.parse_request(request)
+    ### TO UPDATE ###
+    if 'mesh' not in data.keys():
+        return jsonify({'error': 'Mesh points must be provided with \'mesh\' key.'}), 400
+    
     mesh = np.array(data['mesh'])
     return jsonify({'Convex polygon': geometry_engine.check_convex(mesh)})
 
