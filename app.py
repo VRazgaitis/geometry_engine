@@ -39,5 +39,11 @@ def check_convex_endpoint():
     mesh = np.array(data['mesh'])
     return jsonify({'Convex polygon': geometry_engine.check_convex(mesh)})
 
+@app.route('/bounding_box', methods=['GET','POST'])
+def bounding_box_endpoint():
+    data = utils.parse_request(request)
+    mesh = np.array(data['mesh'])
+    return jsonify({'Bounding box': geometry_engine.compute_bounding_box(mesh)})
+
 if __name__ == '__main__':
     app.run(debug=True)
