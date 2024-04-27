@@ -40,13 +40,15 @@ class TestFlaskApi(TestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_move_mesh_no_mesh(self):
-        """Test return status code with no provided mesh"""
+        """Test return status code and error message with no provided mesh"""
         response = self.client.post('/move_mesh', data=json.dumps({
             'x': 1,
             'y': 2,
             'z':10
         }), content_type='application/json')
         self.assertEqual(response.status_code, 400)
+        response_data = json.loads(response.data)
+        self.assertEqual(response_data['error'], 'Mesh values must be provided as coordinate points')
 
     # ROTATE MESH ENDPOINT
     def test_rotate_mesh_correct_inputs(self):
