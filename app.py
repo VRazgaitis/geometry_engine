@@ -6,17 +6,20 @@ import numpy as np
 app = Flask(__name__)
 
 @app.route('/move_mesh', methods=['GET','POST'])
-def move_mesh_endpoint():
-    # VALIDATE API PARAMETERS
-    parameters = utils.get_parameters(request)
-    if not parameters:
-        return jsonify({'error': 'No parameters provided'}), 400
-    expected_parameters = ('mesh', 'x', 'y', 'z', 'X', 'Y', 'Z')
-    if not utils.check_provided_parameters(parameters, expected_parameters):
-        return jsonify({'error': 'Invalid provided parameters'}), 400    
-    if not utils.check_valid_mesh(parameters, request):
-        return jsonify({'error': 'Mesh values must be coordinate points'}), 400
-    # RUN COMPUTATION
+@utils.validate_parameters(('mesh', 'x', 'y', 'z', 'X', 'Y', 'Z'))
+def move_mesh_endpoint(parameters):
+    """
+    Transforms a mesh based on specified translation parameters.
+    The mesh is translated along the x, y, and z axes using provided values.
+
+    Args:
+    - parameters (dict): A dictionary containing:
+        - 'mesh' (list of lists): Mesh data points.
+        - 'x', 'y', 'z' (float, optional): Translation values along respective axes.
+
+    Returns:
+    - JSON: A JSON object with the transformed mesh data.
+    """
     mesh = np.array(parameters['mesh'])
     result = geometry_engine.move_mesh(mesh, 
                        parameters.get('x',0.0), 
@@ -25,48 +28,57 @@ def move_mesh_endpoint():
     return jsonify({'mesh': result})
 
 @app.route('/rotate_mesh', methods=['GET','POST'])
-def rotate_mesh_endpoint():
-    # VALIDATE API PARAMETERS
-    parameters = utils.get_parameters(request)
-    if not parameters:
-        return jsonify({'error': 'No parameters provided'}), 400
-    expected_parameters = ('mesh', 'angle', 'axis')
-    if not utils.check_provided_parameters(parameters, expected_parameters):
-        return jsonify({'error': 'Invalid provided parameters'}), 400 
-    # Error check rotation axis character
-    axis = parameters.get('axis', 'x')
-    if axis not in ('x', 'X', 'y', 'Y', 'z', 'Z'):
-        return jsonify({'error': 'Invalid rotation axis. Axis must be one of x, X, y, Y, z, Z.'}), 400
-    if not utils.check_valid_mesh(parameters, request):
-        return jsonify({'error': 'Mesh values must be coordinate points'}), 400
-    try:
-        angle = float(parameters.get('angle', 0))
-    except ValueError:
-        return jsonify({'error': 'Invalid angle provided. Angle must be a numeric value.'}), 400
-    # RUN COMPUTATION
+@utils.validate_parameters(('mesh', 'angle', 'axis'), rotation_endpoint=True)
+def rotate_mesh_endpoint(parameters):
+    """
+    Rotates a mesh around a specified axis by a given angle.
+
+    Args:
+    parameters (dict): A dictionary containing:
+        - 'mesh' (list of lists): Mesh data points.
+        - 'angle' (float): Rotation angle in degrees.
+        - 'axis' (str): Axis of rotation ('x', 'y', or 'z').
+
+    Returns:
+    - JSON: A JSON object with the rotated mesh data.
+    """
     mesh = np.array(parameters['mesh'])
+    angle = float(parameters.get('angle', 0))
+    axis = parameters.get('axis', 'x')
     result = geometry_engine.rotate_mesh(mesh, 
                        angle,
                        axis)
     return jsonify({'mesh': result})
 
 @app.route('/check_convex', methods=['GET','POST'])
-def check_convex_endpoint():
-    # VALIDATE API PARAMETERS
-    parameters = utils.get_parameters(request)
-    if not utils.check_valid_mesh(parameters, request):
-        return jsonify({'error': 'Mesh values must be coordinate points'}), 400
-    # RUN COMPUTATION
+@utils.validate_parameters(('mesh'))
+def check_convex_endpoint(parameters):
+    """
+    Determines if the provided mesh points form a convex polygon.
+
+    Args:
+    parameters (dict): A dictionary containing:
+        - 'mesh' (list of lists): Points of the mesh as coordinate pairs.
+
+    Returns:
+    - JSON: A JSON object indicating whether the polygon is convex.
+    """
     mesh = np.array(parameters['mesh'])
     return jsonify({'Convex polygon': geometry_engine.check_convex(mesh)})
 
 @app.route('/bounding_box', methods=['GET','POST'])
-def bounding_box_endpoint():
-    # VALIDATE API PARAMETERS
-    parameters = utils.get_parameters(request)
-    if not utils.check_valid_mesh(parameters, request):
-        return jsonify({'error': 'Mesh values must be coordinate points'}), 400
-    # RUN COMPUTATION
+@utils.validate_parameters(('mesh', 'x', 'y', 'z', 'X', 'Y', 'Z'))
+def bounding_box_endpoint(parameters):
+    """
+    Computes the bounding box of the given mesh.
+
+    Args:
+    parameters (dict): A dictionary containing:
+        - 'mesh' (list of lists): Mesh data points.
+
+    Returns:
+    - JSON: A JSON object containing the 8 points of the oriented bounding box.
+    """
     mesh = np.array(parameters['mesh'])
     return jsonify({'Bounding box': geometry_engine.compute_bounding_box(mesh)})
 

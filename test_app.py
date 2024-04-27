@@ -39,6 +39,15 @@ class TestFlaskApi(TestCase):
         }), content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
+    def test_move_mesh_no_mesh(self):
+        """Test return status code with no provided mesh"""
+        response = self.client.post('/move_mesh', data=json.dumps({
+            'x': 1,
+            'y': 2,
+            'z':10
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
     # ROTATE MESH ENDPOINT
     def test_rotate_mesh_correct_inputs(self):
         """Test return status code with valid inputs"""
@@ -66,6 +75,26 @@ class TestFlaskApi(TestCase):
             'axis': 'Y'
         }), content_type='application/json')
         self.assertEqual(response.status_code, 400)
+
+    def test_rotate_mesh_bad_mesh(self):
+        """Test return status code with text string for mesh"""
+        response = self.client.post('/rotate_mesh', data=json.dumps({
+            'mesh': 'a string',
+            'angle': 20,
+            'axis': 'Y'
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
+    def test_rotate_mesh_no_mesh(self):
+        """Test return status code with no mesh"""
+        response = self.client.post('/rotate_mesh', data=json.dumps({
+            'angle': 20,
+            'axis': 'Y'
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        # Assert that the error message is as expected
+        response_data = json.loads(response.data)
+        self.assertEqual(response_data['error'], 'Mesh values must be provided as coordinate points')
 
 if __name__ == "__main__":
     pytest.main()

@@ -2,15 +2,14 @@ import requests
 import json
 
 # Define the URL of the Flask endpoint
-url = 'http://127.0.0.1:5000/rotate_mesh'
+url = 'http://127.0.0.1:5000/move_mesh'
 
 mesh_data = '2.0007,0,0;0,1,0;0,0,1'
 
 # Define the query parameters
 params = {
-    'mesh': mesh_data,
-    'angle': 20,
-    'axis': 'z'
+    "mesh": mesh_data,
+    "x":1
 }
 
 # Send the GET request with the specified parameters

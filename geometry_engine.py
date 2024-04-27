@@ -5,9 +5,9 @@ def move_mesh(mesh, x=0.0, y=0.0, z=0.0):
     """
     Moves points of a 3d mesh by (a,b,c) units along (x,y,z) axes.
 
-    Paramters:
+    Args:
     - mesh (numpy.ndarray): A 3D numpy array representing the mesh to be moved.
-    -                       Each row should represent a point in 3D space as [x, y, z].
+                            Each row should represent a point in 3D space as [x, y, z].
     - x (float): amount to move x values.
     - y (float): amount to move y values.
     - z (float): amount to move z values.
@@ -28,7 +28,7 @@ def rotate_mesh(mesh, angle, axis):
     The rotation is performed in a right-handed coordinate system, where positive angles
     correspond to counter-clockwise rotation when looking along the axis towards the origin.
 
-    Parameters:
+    Args:
     - mesh (numpy.ndarray): A 3D numpy array representing the mesh to be rotated.
                             Each row should represent a point in 3D space as [x, y, z].
     - angle (float): The rotation angle in degrees. Positive values represent
@@ -86,7 +86,7 @@ def check_convex(mesh):
     A polygon is considered convex if all the cross products point in the same general direction (i.e., the
     dot product of consecutive cross products is non-negative).
 
-    Parameters:
+    Args:
     - mesh (numpy.ndarray): A 3D array where each row represents a 3D point [x, y, z].
 
     Returns:
@@ -136,7 +136,7 @@ def compute_bounding_box(mesh, show_plot=False):
     computes the minimum and maximum coordinates along each principal axis, and constructs the bounding box.
     Optionally, it can also plot the original points and their bounding box.
 
-    Parameters:
+    Args:
     - mesh (numpy.ndarray): A 3D array where each row represents a 3D point [x, y, z].
     - show_plot (bool): If True, the function will plot the points and their bounding box. Default is False.
 
