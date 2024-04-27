@@ -1,24 +1,24 @@
 #!/bin/bash
-# curl -X POST http://127.0.0.1:5000/check_convex \
-#     -H "Content-Type: application/json" \
-#     -d '{"mesh": [[0, 0, 1],[2, 0, 2],[2, 1, 1],[1, 1, 3],[1, 2, 1],[2, 2, 3],[2, 3, 1],[0, 3, 3],[0, 0, 1]]}'
 
-# curl -X POST http://127.0.0.1:5000/move_mesh \
-#     -H "Content-Type: application/json" \
-#     -d '{"mesh": [[2, 0, 1],[2, 0, 2]], 
-#          "a":"string"}'
-
-# curl -X POST http://127.0.0.1:5000/move_mesh \
-#     -H "Content-Type: application/json" \
-#     -d '{"mesh": [[2, 0, 1],[2, 0, 2]], 
-#          "x":1}'
-
-curl -X POST http://127.0.0.1:5000/rotate_mesh \
+# CHECK CONVEX
+curl -X POST http://127.0.0.1:5000/check_convex \
     -H "Content-Type: application/json" \
-    -d '{"mesh": [[2, 0, 1],[2, 0, 2]], 
-         "angle":10,
-         "axis":"y"}'
+    -d '{"mesh": [[0, 0, 1],[2, 0, 2],[2, 1, 1],[1, 1, 3],[1, 2, 1],[2, 2, 3],[2, 3, 1],[0, 3, 3],[0, 0, 1]]}'
 
+# # MOVE MESH
+# curl -X POST http://127.0.0.1:5000/move_mesh \
+#     -H "Content-Type: application/json" \
+#     -d '{"mesh": [[2, 0, 1],[2, 0, 2]], 
+#          "z":"30"}'
+
+# # ROTATE MESH
+# curl -X POST http://127.0.0.1:5000/rotate_mesh \
+#     -H "Content-Type: application/json" \
+#     -d '{"mesh": [[2, 0, 1],[2, 0, 2]], 
+#          "angle":10,
+#          "axis":"y"}'
+
+# # BOUNDING BOX
 # curl -X POST http://127.0.0.1:5000/bounding_box \
 #     -H "Content-Type: application/json" \
 #     -d '{"mesh": [[4.1949637777057571, -6.9916062961762613, 16.047420986034020], 
