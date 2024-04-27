@@ -10,7 +10,7 @@ source myenv/bin/activate
 pip install -r requirements.txt
 
 # Set environment variables
-export FLASK_APP=app
+export FLASK_APP=run
 export FLASK_ENV=development
 
 # Run the Flask application

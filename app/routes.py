@@ -1,9 +1,8 @@
-from flask import Flask, request, jsonify
-import utils
-import geometry_engine
+from flask import request, jsonify
 import numpy as np
-
-app = Flask(__name__)
+from app import app
+import app.utils as utils
+import app.geometry_engine as geometry_engine
 
 @app.route('/move_mesh', methods=['GET','POST'])
 @utils.validate_parameters(('mesh', 'x', 'y', 'z', 'X', 'Y', 'Z'))
@@ -81,6 +80,3 @@ def bounding_box_endpoint(parameters):
     """
     mesh = np.array(parameters['mesh'])
     return jsonify({'Bounding box': geometry_engine.compute_bounding_box(mesh)})
-
-if __name__ == '__main__':
-    app.run(debug=True)

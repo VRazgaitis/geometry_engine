@@ -1,5 +1,9 @@
 import numpy as np
-import geometry_engine
+import sys
+import os
+# Add the parent dir to Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from app import geometry_engine
 
 ## MOVE MESH TESTS
 def test_move_mesh_type_check():

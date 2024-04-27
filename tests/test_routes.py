@@ -1,6 +1,10 @@
 import pytest
 import json
 from flask_testing import TestCase
+import sys
+import os
+# Add parent dir to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app import app
 
 class TestFlaskApi(TestCase):

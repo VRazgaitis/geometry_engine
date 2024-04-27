@@ -1,0 +1,28 @@
+< PROJECT ROOT >
+   |
+   |-- app/
+   |    |
+   |    | -- __init__.py                   # Initialize the Flask APP 
+   |    | -- geometry_engine.py            # Contains computational functions  
+   |    | -- routes.py                     # Contains API endpoints
+   |    | -- util.py                       # Contains helper fns  
+   |    
+   |
+   |-- tests/
+   |    |
+   |    | -- test_geometry_engine.py      # App Configuration
+   |    | -- test_routes.py                # Helpers to manipulate date, files  
+   |
+   |
+   |-- rhino/
+   |    |
+   |    | -- bake_points.py                # Rhino helpers
+   |    | -- etc                           # etc.  
+   |
+   |
+   |
+   |-- README.md
+   |
+   |-- requirements.txt                    # Application Dependencies
+   |
+   |-- run.py                              # Entry point to run app in development and production
