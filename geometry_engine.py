@@ -8,9 +8,9 @@ def move_mesh(mesh, x=0.0, y=0.0, z=0.0):
     Paramters:
     - mesh (numpy.ndarray): A 3D numpy array representing the mesh to be moved.
     -                       Each row should represent a point in 3D space as [x, y, z].
-    - x (float): the value to move x points.
-    - y (float): the value to move x points.
-    - z (float): the value to move x points.
+    - x (float): amount to move x values.
+    - y (float): amount to move y values.
+    - z (float): amount to move z values.
 
     Returns:
     - list: A nested list, where each list entry is an [x, y, z] coordinate
@@ -149,7 +149,7 @@ def compute_bounding_box(mesh, show_plot=False):
     covariance_matrix = np.cov(points)  # diagonals represent clustering about each mean
     eigenvalues, eigenvectors = np.linalg.eig(covariance_matrix)
     # center the dataset about the cartesian origin
-    centered_points = points - means[:,np.newaxis]  #nnp.newaxis for subtraction compatability
+    centered_points = points - means[:,np.newaxis]  # nnp.newaxis for subtraction compatability
     # rotate points to align with the eigenvector basis (Eig.T=inv(Eig))
     rotated_coordinates = np.matmul(eigenvectors.T, centered_points)
     # compute a bounding box
@@ -175,7 +175,8 @@ def compute_bounding_box(mesh, show_plot=False):
 
 def plot_bounding_box(points, bounding_box_coords):
     """
-    Plots a minimum volume bounding box superimposed on top of mesh points
+    Plots to the console a minimum volume bounding box,
+    superimposed on top of the provided mesh points.
     """
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')

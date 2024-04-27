@@ -21,7 +21,8 @@ def get_parameters(request):
 
 def check_valid_mesh(parameters, request):
     """
-    Returns true if the provided mesh is formatted as a nested list of coordinate points.
+    Returns true if the provided mesh is formatted as a nested list of floats 
+    representing coordinate points.
 
     Parameters:
     - parameters (dict): client's provided parameters
@@ -29,8 +30,10 @@ def check_valid_mesh(parameters, request):
     Returns:
     - bool: True if mesh contains coordinate points
     """
+    # Validate mesh has been provided 
     if 'mesh' not in parameters:
         return False
+    # Confirm all coordinate points are numeric
     if request.method == 'POST':
         for point in parameters.get('mesh'):
             for coordinate in point:
@@ -39,20 +42,20 @@ def check_valid_mesh(parameters, request):
                 except ValueError:
                     return False
         return True
-                
+    # mesh points come in as string for GET requests         
     elif request.method == 'GET':
-        data = request.args.to_dict()
-        mesh_points_as_string = request.args.get('mesh')
+        mesh_points_as_string = parameters['mesh']
         try:
             # fix query param string from "a,b,c;d,e,f" to [[a,b,c],[d,e,f]]
-            data.update(mesh=[list(map(float, point.split(','))) for point in mesh_points_as_string.split(';')])
+            parameters.update(mesh=[list(map(float, point.split(','))) for point in mesh_points_as_string.split(';')])
         except ValueError:
             return False
     return True
 
 def check_provided_parameters(provided_parameters, expected_parameters):
     """
-    Returns True if all of the provided parameters are expected for the given computation 
+    Returns True if all of the provided parameters in an API call are expected
+    for the given computation 
 
     Parameters:
     - provided_parameters (dict): client's provided parameters
