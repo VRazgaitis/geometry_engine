@@ -3,7 +3,7 @@ A Python service that uses Flask to act as a geometry engine, capable of perform
 
 ## Geometric Operations
 #### Bounding Box 
-Given an array of points, calculates the smallet bounding box that contains all of the 3D points.  
+Given an array of points, calculates the smallet orinted bounding box that contains all of the 3D points.  
 Returns a JSON of 3D **bounding box** coordinate points,  
 [[x<sub>1</sub>, y<sub>1</sub>, z<sub>1</sub>], [x<sub>2</sub>, y<sub>2</sub>, z<sub>2</sub>], [...]]  
 
