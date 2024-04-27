@@ -1,38 +1,38 @@
 from flask import request, jsonify
 
-def parse_request(request):
+def get_parameters(request):
     """
     Takes client requests (as a JSON Payload or Query parameters) and returns them in a Python dictionary.
-    This function also attempts to parse and convert mesh coordinates to float. If the conversion fails, it
-    returns a 400 error with a JSON response indicating an invalid format.
+    Returns False if an different type of HTTP request has been made
 
     Parameters:
     - request: The Flask request object containing the client's HTTP request.
 
     Returns:
-    - dict: A dictionary containing the parsed data, or
-    - Flask.Response: A JSON response with status code 400 if an error occurs during type conversion.
+    - dict: A dictionary containing the client's provided parameters
     """
     if request.method == 'POST':
-        keys = request.json
+        parameters = request.json
     elif request.method == 'GET':
-        keys = request.args.to_dict()
+        parameters = request.args.to_dict()
     else:
         return False
-    return keys
+    return parameters
 
-def get_keys(request):
-    if request.method == 'POST':
-        keys = request.json
-    elif request.method == 'GET':
-        keys = request.args.to_dict()
-    else:
+def check_valid_mesh(parameters, request):
+    """
+    Returns true if the provided mesh is formatted as a nested list of coordinate points.
+
+    Parameters:
+    - parameters (dict): client's provided parameters
+
+    Returns:
+    - bool: True if mesh contains coordinate points
+    """
+    if 'mesh' not in parameters:
         return False
-    return keys
-
-def check_mesh_values(keys, request):
     if request.method == 'POST':
-        for point in keys.get('mesh'):
+        for point in parameters.get('mesh'):
             for coordinate in point:
                 try:
                     float(coordinate)
@@ -50,7 +50,18 @@ def check_mesh_values(keys, request):
             return False
     return True
 
-def check_keys(provded_keys, expected_keys):
-    if case:
-        return False
+def check_provided_parameters(provided_parameters, expected_parameters):
+    """
+    Returns True if all of the provided parameters are expected for the given computation 
+
+    Parameters:
+    - provided_parameters (dict): client's provided parameters
+    - expected_parameters (list): allowable parameters for given function 
+
+    Returns:
+    - bool: True if all provided parameters are expected 
+    """
+    for key in provided_parameters:
+        if key not in expected_parameters:
+            return False
     return True
