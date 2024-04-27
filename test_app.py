@@ -7,7 +7,39 @@ class TestFlaskApi(TestCase):
     def create_app(self):
         app.config['TESTING'] = True
         return app
+        
+    # MOVE MESH ENDPOINT
+    def test_move_mesh_correct_inputs(self):
+        """Test return status code with valid inputs"""
+        response = self.client.post('/move_mesh', data=json.dumps({
+            'mesh': [[0, 0, 0], [1, 0, 0], [0, 1, 0]],
+            'x': 1,
+            'y': 2,
+            'z':10
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
 
+    def test_move_mesh_bad_axis(self):
+        """Test return status code with invalid input"""
+        response = self.client.post('/move_mesh', data=json.dumps({
+            'mesh': [[0, 0, 0], [1, 0, 0], [0, 1, 0]],
+            'A': 1,
+            'y': 2,
+            'z':10
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
+    def test_move_mesh_bad_mesh(self):
+        """Test return status code with invalid mesh"""
+        response = self.client.post('/move_mesh', data=json.dumps({
+            'mesh': 'maybe I can just decribe my mesh',
+            'x': 1,
+            'y': 2,
+            'z':10
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
+    # ROTATE MESH ENDPOINT
     def test_rotate_mesh_correct_inputs(self):
         """Test return status code with valid inputs"""
         response = self.client.post('/rotate_mesh', data=json.dumps({
