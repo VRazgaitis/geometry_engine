@@ -21,10 +21,12 @@
    |
    |
    |
-   |-- README.md
+   |-- openapi.json                        # OpenAPI standard specification 
    |
    |-- README.md
    |
    |-- requirements.txt                    # Application Dependencies
    |
    |-- run.py                              # Entry point to run app in development and production
+   |
+   |-- setup_and_run.sh                              # sets up venv, installs reqs, runs app
