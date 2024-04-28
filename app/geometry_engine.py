@@ -28,6 +28,9 @@ def rotate_mesh(mesh, angle, axis):
     The rotation is performed in a right-handed coordinate system, where positive angles
     correspond to counter-clockwise rotation when looking along the axis towards the origin.
 
+    To rotate a point about a specific axis, you take the dot product of the point's 
+    vector representation with the corresponding rotation matrix.
+
     Args:
     - mesh (numpy.ndarray): A 3D numpy array representing the mesh to be rotated.
                             Each row should represent a point in 3D space as [x, y, z].
@@ -40,18 +43,7 @@ def rotate_mesh(mesh, angle, axis):
     - list: A nested list, where each list entry is an [x, y, z] coordinate
             point that has been rotated by the specified angle around the 
             specified axis.
-
-    Raises:
-        ValueError: If the specified axis is not 'X', 'Y', or 'Z'.
     """
-    # Check if the angle is a number (either int or float)
-    if not isinstance(angle, (int, float)):
-        raise TypeError("angle must be a number (int or float)")
-
-    # Check if the axis is one of the accepted values
-    if axis not in ('x', 'X', 'y', 'Y', 'z', 'Z'):
-        raise ValueError("axis must be one of 'x', 'X', 'y', 'Y', 'z', 'Z'")
-    
     angle = np.radians(float(angle))
     # Define rotation matrices
     r_x = np.array([[1, 0, 0],
@@ -66,7 +58,6 @@ def rotate_mesh(mesh, angle, axis):
                    [np.sin(angle), np.cos(angle), 0],
                    [0, 0, 1]])
     
-    # Select appropriate rotation matrix
     if axis in ('x','X'):
         rotation_matrix = r_x
     elif axis in ('y','Y'):
@@ -74,9 +65,7 @@ def rotate_mesh(mesh, angle, axis):
     elif axis in ('z','Z'):
         rotation_matrix = r_z
 
-    # Perform rotation
-    rotated_mesh = mesh.copy()
-    return rotation_matrix.dot(rotated_mesh.T).T.tolist()
+    return rotation_matrix.dot(mesh.T).T.tolist()
 
 def check_convex(mesh):
     """
@@ -105,17 +94,13 @@ def check_convex(mesh):
     # Calculate consecutive edge vectors and cross products 
     normals = []
     for i in range(n):
-        # get a vector from edge i to i+1
-        edge_1 = mesh[(i + 1) % n] - mesh[i]
-        # get a vector from edge i+1 to i+2
-        edge_2 = mesh[(i + 2) % n] - mesh[(i + 1) % n]
-        # get the cross product of edge_1 x edge_2
-        normal = np.cross(edge_1, edge_2)
-        if np.linalg.norm(normal) == 0:
+        vector_a = mesh[(i + 1) % n] - mesh[i]
+        vector_b = mesh[(i + 2) % n] - mesh[(i + 1) % n]
+        normal_vector = np.cross(vector_a, vector_b)
+        if np.linalg.norm(normal_vector) == 0:
             continue #skip parallel edges
-        normals.append(normal)
+        normals.append(normal_vector)
     
-    # check the direction of the normals
     if not normals:
         return False
     
@@ -123,8 +108,7 @@ def check_convex(mesh):
     reference_normal = normals[0]
     for normal in normals[1:]:
         if np.dot(reference_normal, normal) <= 0:
-            # at least one edge whose normal points opposite to the reference normal
-            return False
+            return False  # at least one edge pair has a normal pointing opposite to the reference normal
     return True
 
 def compute_bounding_box(mesh, show_plot=False):
@@ -167,7 +151,7 @@ def compute_bounding_box(mesh, show_plot=False):
     # un-align the bounding box from the rotated points
     bounding_box_coords = np.matmul(eigenvectors, 
         rectangle_coordinates(xmin, ymin, zmin, xmax, ymax, zmax))
-    # move box from being centered about the cartesian origin
+    # un-center box centering around the cartesian origin
     bounding_box_coords += means[:, np.newaxis] 
     if show_plot:
         plot_bounding_box(points, bounding_box_coords)

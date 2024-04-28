@@ -10,16 +10,18 @@
    |
    |-- tests/
    |    |
-   |    | -- test_geometry_engine.py       # App Configuration
-   |    | -- test_routes.py                # Helpers to manipulate date, files  
+   |    | -- test_geometry_engine.py       # Tests geometry engine functions
+   |    | -- test_routes.py                # Tests API endpoints  
    |
    |
    |-- rhino/
    |    |
-   |    | -- bake_points.py                # Rhino helpers
+   |    | -- bake_points.py                # Rhino python functions 
    |    | -- etc                           # etc.  
    |
    |
+   |
+   |-- README.md
    |
    |-- README.md
    |
