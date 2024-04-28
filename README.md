@@ -1,9 +1,10 @@
 # Geometry Engine
 A Python service that uses Flask to act as a geometry engine, capable of performing 3D geometric opperations on a provided set of coordinate points.
 
-## Geometric Operations
+## Available Geometric Operations
 ### Bounding Box 
 Given an array of points, calculates the smallet oriented bounding box that contains all of the 3D points.  
+A writeup of the mathematical concepts used in computing the bouding box can be found in ```bounding_box.ipynb```  
 Returns a JSON of 3D **bounding box** coordinate points,  
 [[x<sub>1</sub>, y<sub>1</sub>, z<sub>1</sub>], [x<sub>2</sub>, y<sub>2</sub>, z<sub>2</sub>], [...]]  
 
@@ -40,5 +41,9 @@ Returns a **boolean** value in JSON format
 * Geometry engine functions can be tested by running ```pytest ./tests/test_geometry_engine.py```
 
 ### API Endpoints
-* API endpoints can be tested by running ```pytest ./tests/test_routes.py```
+* API endpoints have been tested to confirm that the expected JSON objects are returned when required function parameters have been provided
+* API endpoints have been tested to confirm that insightful errors and graceful exits occur when the provided parameters are incorrect
+* Tests can be ran by running ```pytest ./tests/test_routes.py```
+* Error checking API parameters is done manually using decorators. Given more time I would explore Flask-Conenexion and the Swagger/openAPI Specification
+* An OpenAPI specification file describing API endpoints is available as ```openapi.json```
 
