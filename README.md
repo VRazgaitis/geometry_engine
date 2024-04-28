@@ -1,7 +1,7 @@
 # Geometry Engine
 A Python service that uses Flask to act as a geometry engine, capable of performing 3D geometric opperations on a provided set of coordinate points.
 
-## Available Geometric Operations
+## Available endpoint computations
 ### Bounding Box 
 Given an array of points, calculates the smallet oriented bounding box that contains all of the 3D points.  
 A writeup of the mathematical concepts used in computing the bouding box can be found in ```bounding_box.ipynb```  
@@ -37,7 +37,7 @@ Returns a **boolean** value in JSON format
 ## Testing
 ### Geometry Engine 
 * Geometry engine functions have been tested using the Pytest framework. Testing confirms that each of the four opperations return expected values given specified inputs
-* The oriented bounding box problem is the most complex opperation, and requires further testing with more difficult point sets and edge cases
+* The oriented bounding box problem is the most complex opperation, and requires further testing with more difficult point sets and edge cases to assert its validity
 * Geometry engine functions can be tested by running ```pytest ./tests/test_geometry_engine.py```
 
 ### API Endpoints
