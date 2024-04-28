@@ -28,14 +28,17 @@ Returns a **boolean** value in JSON format
 <img src="images/convex_polygon.png" width="60%" alt="Convex VS Concave Polygon">
   
 ## How to run the service locally (Linux/macOS only)
-* run **./setup_and_run.sh** to run the web application locally  
-* Compute geometric operations, using HTTP GET or POST requests
-* See **example.py** or **example.sh** for example usage
+* run ```./setup_and_run.sh``` to configure a virtual environment, install dependencies, and run the web application locally
+* subsequent Flask web app runs can be called by running ```run.py```  
+* Geometry engine computations can be ran using HTTP GET or POST requests
+* See ```example.py``` or ```example.sh``` for example usage
   
 ## Testing
 ### Geometry Engine 
 * Geometry engine functions have been tested using the Pytest framework. Testing confirms that each of the four opperations return expected values given specified inputs
 * The oriented bounding box problem is the most complex opperation, and requires further testing with more difficult point sets and edge cases
+* Geometry engine functions can be tested by running ```pytest ./tests/test_geometry_engine.py```
 
 ### API Endpoints
+* API endpoints can be tested by running ```pytest ./tests/test_routes.py```
 
