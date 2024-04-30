@@ -43,7 +43,7 @@ Returns a **boolean** value in JSON format
 ### API Endpoints
 * API endpoints have been tested to confirm that the expected JSON objects are returned when required function parameters have been provided
 * API endpoints have been tested to confirm that insightful errors and graceful exits occur when the provided parameters are incorrect
-* Tests can be ran by running ```pytest ./tests/test_routes.py```
+* Tests can be ran by running ```pytest ./tests/test_routes.py```. The server must be running while testing API endpoints.
 * Error checking API parameters is done manually using decorators. Given more time I would explore Flask-Conenexion and the Swagger/openAPI Specification
 * An OpenAPI specification file describing API endpoints is available as ```openapi.json```
 
