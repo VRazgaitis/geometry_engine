@@ -26,14 +26,23 @@ class TestFlaskApi(TestCase):
 
     def test_move_mesh_correct_inputs_get(self):
         """Test return status code with valid inputs using GET request"""
-        url = 'http://127.0.0.1:5000/move_mesh'
         mesh_data = '2.0007,0,0;0,1,0;0,0,1'
         params = {
             "mesh": mesh_data,
             "x":1
         }
-        response = requests.get(url, params=params)
+        response = self.client.get('/move_mesh', query_string=params)
         self.assertEqual(response.status_code, 200)  
+
+    def test_move_mesh_unsupported_method(self):
+        """Test return status code with unsupported PUT request"""
+        response = self.client.put('/move_mesh', data=json.dumps({
+            'mesh': [[0, 0, 0], [1, 0, 0], [0, 1, 0]],
+            'x': 1,
+            'y': 2,
+            'z': 10
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 405)
 
     def test_move_mesh_bad_axis(self):
         """Test return status code with invalid input"""
@@ -44,6 +53,11 @@ class TestFlaskApi(TestCase):
             'z':10
         }), content_type='application/json')
         self.assertEqual(response.status_code, 400)
+
+    def test_move_mesh_empty_payload(self):
+        """Test return status code with empty payload input"""
+        response = self.client.post('/move_mesh', data=json.dumps({}), content_type='application/json')
+        self.assertEqual(response.status_code, 422)
 
     def test_move_mesh_bad_mesh(self):
         """Test return status code with invalid mesh"""
@@ -68,12 +82,11 @@ class TestFlaskApi(TestCase):
 
     def test_move_mesh_no_mesh_get(self):
         """Test return status code, error msg with no mesh using GET request"""
-        url = 'http://127.0.0.1:5000/move_mesh'
         mesh_data = '2.0007,0,0;0,1,0;0,0,1'
         params = {
             "x":1
         }
-        response = requests.get(url, params=params)
+        response = self.client.get('/move_mesh', query_string=params)
         self.assertEqual(response.status_code, 400)
         response_data = json.loads(response.text)
         self.assertEqual(response_data['error'], 'Mesh values must be provided as coordinate points')  
@@ -90,14 +103,13 @@ class TestFlaskApi(TestCase):
 
     def test_rotate_mesh_correct_inputs_get(self):
         """Test return status code with valid inputs using GET request"""
-        url = 'http://127.0.0.1:5000/rotate_mesh'
         mesh_data = '2,0,0;0,1,0;0,0,1'
         params = {
             "mesh": mesh_data,
             "angle":20,
-            "axis":'z'
+            "axis":'y'
         }
-        response = requests.get(url, params=params)
+        response = self.client.get('/rotate_mesh', query_string=params)
         self.assertEqual(response.status_code, 200)  
 
     def test_rotate_mesh_bad_axis(self):
@@ -111,14 +123,13 @@ class TestFlaskApi(TestCase):
 
     def test_rotate_mesh_bad_axis_get(self):
         """Test return status code with valid inputs using GET request"""
-        url = 'http://127.0.0.1:5000/rotate_mesh'
         mesh_data = '2,0,0;0,1,0;0,0,1'
         params = {
             "mesh": mesh_data,
             "angle":20,
             "axis":'a'
         }
-        response = requests.get(url, params=params)
+        response = self.client.get('/rotate_mesh', query_string=params)
         self.assertEqual(response.status_code, 400)  
 
     def test_rotate_mesh_bad_angle(self):
@@ -175,18 +186,16 @@ class TestFlaskApi(TestCase):
 
     def test_check_convex_correct_inputs_get(self):
         """Test return status code with valid inputs using GET request"""
-        url = 'http://127.0.0.1:5000/check_convex'
         mesh_data = '0,0,0;04,0,0;4,3,0;0,3,0'
         params = {"mesh": mesh_data}
-        response = requests.get(url, params=params)
+        response = self.client.get('/check_convex', query_string=params)
         self.assertEqual(response.status_code, 200)  
 
     def test_check_convex_bad_mesh_get(self):
         """Test return status code with valid inputs using GET request"""
-        url = 'http://127.0.0.1:5000/check_convex'
         mesh_data = '0,0,a;04,0,0;4,3,0;0,3,0'
         params = {"mesh": mesh_data}
-        response = requests.get(url, params=params)
+        response = self.client.get('/check_convex', query_string=params)
         self.assertEqual(response.status_code, 400)  
         response_data = json.loads(response.text)
         self.assertEqual(response_data['error'], 'Mesh values must be provided as coordinate points')
@@ -222,10 +231,9 @@ class TestFlaskApi(TestCase):
 
     def test_bounding_box_correct_inputs_get(self):
         """Test return status code with valid inputs using GET request"""
-        url = 'http://127.0.0.1:5000/bounding_box'
         mesh_data = '0,0,0;04,0,0;4,3,0;0,3,0'
         params = {"mesh": mesh_data}
-        response = requests.get(url, params=params)
+        response = self.client.get('/bounding_box', query_string=params)
         self.assertEqual(response.status_code, 200)  
 
     def test_bounding_box_bad_mesh_get(self):
@@ -233,7 +241,7 @@ class TestFlaskApi(TestCase):
         url = 'http://127.0.0.1:5000/bounding_box'
         mesh_data = '0,0,a;04,0,0;4,3,0;0,3,0'
         params = {"mesh": mesh_data}
-        response = requests.get(url, params=params)
+        response = self.client.get('/bounding_box', query_string=params)
         self.assertEqual(response.status_code, 400)  
         response_data = json.loads(response.text)
         self.assertEqual(response_data['error'], 'Mesh values must be provided as coordinate points')

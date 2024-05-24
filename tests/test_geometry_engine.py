@@ -85,6 +85,12 @@ def test_check_convex_square():
                     [0, 3, 0]])
     assert geometry_engine.check_convex(square) == True
 
+def test_check_convex_too_few_points():
+    """Test not enough points for polygon"""
+    square = np.array([ [0, 0, 0],      
+                    [4, 0, 0]])
+    assert geometry_engine.check_convex(square) == False
+
 def test_check_convex_square_reverse():
     """Conmfirm that checks were independent of node traversal direction (clockwise, cc)"""
     square = np.array([ [0, 0, 0],      

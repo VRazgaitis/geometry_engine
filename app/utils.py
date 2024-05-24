@@ -22,7 +22,7 @@ def validate_parameters(expected_parameters, rotation_endpoint=False):
         def wrapped_function(*args, **kwargs):
             parameters = get_parameters(request)
             if not parameters:
-                return jsonify({'error': 'No parameters provided'}), 400
+                return jsonify({'error': 'No parameters provided'}), 422
             if not check_provided_parameters(parameters, expected_parameters):
                 return jsonify({'error': 'Invalid provided parameters'}), 400
             if not check_valid_mesh(parameters, request):
@@ -39,7 +39,7 @@ def validate_parameters(expected_parameters, rotation_endpoint=False):
 def get_parameters(request):
     """
     Takes client requests (as a JSON Payload or Query parameters) and returns them in a Python dictionary.
-    Returns False if a different type of HTTP request has been made
+    Returns False for an HTTP request with empty payload
 
     Parameters:
     - request: The Flask request object containing the client's HTTP request.
