@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry Engine</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Geometry Engine</h1>
+        <p>A Python-based engine for computational geometry operations</p>
+    </header>
+    
+    <section id="operations">
+        <h2>Select a Geometric Operation</h2>
+        <form action="/perform_operation" method="post">
+            <label for="operation">Choose an operation:</label>
+            <select id="operation" name="operation">
+                <option value="bounding_box">Compute Bounding Box</option>
+                <option value="rotate_mesh">Rotate Mesh</option>
+                <option value="move_mesh">Move Mesh</option>
+                <option value="check_convexity">Check Convexity</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <section id="features">
+        <h1>Available Opperations</h1>
+        <h3>Bounding Box</h3>
+        <p>Given an array of 3D points, calculates the smallet oriented bounding box 
+            that contains all of the 3D points. <br><br> Returns a JSON of 3D <b>bounding box</b> coordinate points</p>
+        <img src="{{ url_for('static', filename='images/bounding_box.png') }}" alt="Bounding Box" width="250">
+        <h3>Rotate Mesh</h3>
+        <p>Given a 3D Mesh as an Input, rotates the mesh by X degrees along the specified axis. 
+            <br><br> Returns a JSON of 3D <b>rotated</b> coordinate points</p>
+        <h3>Move Mesh</h3>
+        <p>Given a 3D Mesh as an Input, moves the mesh by X units along the specified axis. 
+            <br><br> Returns a JSON of 3D <b>moved</b> coordinate points</p>
+        <h3>Check Convexity</h3>
+        <p>Given a polygon in 3D space represented by 3D Points, checks whether the polygon is convex. 
+            <br><br>A convex polygon is defined as a closed figure where all interior angles are less than 180 degrees.<br><br> Returns a<b>boolean</b> value in JSON format</p>
+            <img src="{{ url_for('static', filename='images/convex_polygon.png') }}" alt="Bounding Box" width="450">
+        </section>
+
+    <section id="github">
+        <h4>Check out the code on Github</h4>
+        <p><a href="https://github.com/VRazgaitis/geometry_engine">GitHub Repository</a></p>
+        <p><a href="https://github.com/VRazgaitis/geometry_engine/blob/main/README.md">Readme</a></p>
+    </section>
+</body>
+</html>

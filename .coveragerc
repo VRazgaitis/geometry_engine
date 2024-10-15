@@ -1,2 +1,6 @@
 [run]
 dynamic_context = test_function
+
+[report]
+exclude_lines =
+    def plot_bounding_box\(
