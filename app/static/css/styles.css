@@ -40,3 +40,21 @@ footer {
     width: 100%;
     bottom: 0;
 }
+.input-container {
+    display: flex;
+    align-items: flex-start;
+}
+#input-rows {
+    flex-grow: 1;
+}
+.input-row {
+    margin-bottom: 10px;
+}
+.button-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+.button-container button {
+    margin-bottom: 5px;
+}

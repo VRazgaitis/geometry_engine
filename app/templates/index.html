@@ -26,6 +26,26 @@
         </form>
     </section>
 
+    <section id="input-values">
+        <h3>Input Values</h3>
+        <div class="input-container">
+            <div id="input-rows">
+                <div class="input-row">
+                    <input type="number" name="x[]" placeholder="x">
+                    <input type="number" name="y[]" placeholder="y">
+                    <input type="number" name="z[]" placeholder="z">
+                </div>
+                <!-- Additional rows will be added here dynamically -->
+            </div>
+            <div class="button-container">
+                <button id="add-row">+</button>
+                <button id="remove-row">-</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='js/points_input_handler.js') }}"></script>
+
     <section id="features">
         <h1>Available Opperations</h1>
         <h3>Bounding Box</h3>
