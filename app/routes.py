@@ -88,7 +88,7 @@ def check_convex_endpoint(parameters):
     - JSON: A JSON object indicating whether the polygon is convex.
     """
     mesh = np.array(parameters['mesh'])
-    return jsonify({'Convex polygon': geometry_engine.check_convex(mesh)})
+    return jsonify({'convex_polygon': geometry_engine.check_convex(mesh)})
 
 @app.route('/bounding_box', methods=['GET','POST'])
 @utils.validate_parameters(('mesh', 'x', 'y', 'z', 'X', 'Y', 'Z'))
@@ -104,4 +104,4 @@ def bounding_box_endpoint(parameters):
     - JSON: A JSON object containing the 8 points of the oriented bounding box.
     """
     mesh = np.array(parameters['mesh'])
-    return jsonify({'Bounding box': geometry_engine.compute_bounding_box(mesh)})
+    return jsonify({'bounding_box': geometry_engine.compute_bounding_box(mesh)})

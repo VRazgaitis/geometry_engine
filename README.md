@@ -8,7 +8,7 @@ A writeup of the mathematical concepts used in computing the bouding box can be 
 Returns a JSON of 3D **bounding box** coordinate points,  
 [[x<sub>1</sub>, y<sub>1</sub>, z<sub>1</sub>], [x<sub>2</sub>, y<sub>2</sub>, z<sub>2</sub>], [...]]  
 
-<img src="images/bounding_box.png" width="40%" alt="Convex VS Concave Polygon">
+<img src="app/static/images/bounding_box.png" width="40%" alt="Convex VS Concave Polygon">
 
 ### Rotate Mesh
 Given a 3D Mesh as an Input, rotates the mesh by X degrees along the specified axis.  
@@ -26,7 +26,7 @@ A convex polygon is defined as a closed figure where all interior angles are les
 Returns a **boolean** value in JSON format  
 
   
-<img src="images/convex_polygon.png" width="60%" alt="Convex VS Concave Polygon">
+<img src="app/static/images/convex_polygon.png" width="60%" alt="Convex VS Concave Polygon">
   
 ## How to run the service locally (Linux/macOS only)
 * run ```./setup_and_run.sh``` to configure a virtual environment, install dependencies, and run the web application locally
