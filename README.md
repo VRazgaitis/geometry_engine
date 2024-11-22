@@ -3,6 +3,7 @@ This project locally deploys a Flask server that performs RESTful 3D geometric o
 
 ## Available endpoint computations
 ### Bounding Box 
+```http://127.0.0.1:5000/bounding_box```<br><br>
 Given an array of points, calculates the smallet oriented bounding box that contains all of the 3D points.  
 A writeup of the mathematical concepts used in computing the bouding box can be found in ```bounding_box.ipynb```  
 Returns a JSON of 3D **bounding box** coordinate points,  
@@ -11,16 +12,22 @@ Returns a JSON of 3D **bounding box** coordinate points,
 <img src="app/static/images/bounding_box.png" width="40%" alt="Convex VS Concave Polygon">
 
 ### Rotate Mesh
+```http://127.0.0.1:5000/rotate_mesh```<br>
+
 Given a 3D Mesh as an Input, rotates the mesh by X degrees along the specified axis.  
 Returns a JSON of **rotated** 3D coordinate points,  
 [[x<sub>1</sub>, y<sub>1</sub>, z<sub>1</sub>], [x<sub>2</sub>, y<sub>2</sub>, z<sub>2</sub>], [...]]   
 
 ### Move Mesh 
+```http://127.0.0.1:5000/move_mesh```<br>
+
 Given a 3D mesh as an input, moves the mesh by a, b and c units along X, Y and Z axis respectively.  
 Returns a JSON of **moved** 3D coordinate points,  
 [[x<sub>1</sub>, y<sub>1</sub>, z<sub>1</sub>], [x<sub>2</sub>, y<sub>2</sub>, z<sub>2</sub>], [...]]   
 
 ### Check Convex 
+```http://127.0.0.1:5000/check_convex```<br>
+
 Given a polygon in 3D space represented by 3D Points, checks whether the polygon is convex.  
 A convex polygon is defined as a closed figure where all interior angles are less than 180 degrees.  
 Returns a **boolean** value in JSON format  
