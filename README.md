@@ -1,5 +1,5 @@
 # Geometry Engine
-This project locally deploys a Flask server that performs RESTful 3D geometric operations on a provided set of coordinate points. Client-side calls can be made by splitting terminals and running examples, or by 
+This project locally deploys a Flask server that performs RESTful 3D geometric operations on a provided set of coordinate points. Client-side calls can be made by splitting terminals and running examples, or with Postman 
 
 ## Available endpoint computations
 ### Bounding Box 
