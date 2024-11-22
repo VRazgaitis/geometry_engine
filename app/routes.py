@@ -5,22 +5,8 @@ import app.utils as utils
 import app.geometry_engine as geometry_engine
 import logging
 
-# Configure logging
-# logging.basicConfig(level=logging.INFO)
-# logger = logging.getLogger(__name__)
-
-# @app.before_request
-# def log_request_info():
-#     logger.info(f"Incoming Request: {request.method} {request.url}")
-#     logger.info(f"Headers: {request.headers}")
-#     logger.info(f"Body: {request.get_data()}")
-
-# @app.after_request
-# def log_response_info(response):
-#     logger.info(f"Outgoing Response: {response.status}")
-#     logger.info(f"Headers: {response.headers}")
-#     logger.info(f"Body: {response.get_data(as_text=True)}")
-#     return response
+print('Computational Geometry server deploye.')
+print('Listening for incoming client requests...')
 
 @app.route('/')
 def home():
