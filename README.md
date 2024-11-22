@@ -1,5 +1,5 @@
 # Geometry Engine
-A Python service that uses Flask to act as a geometry engine, capable of performing 3D geometric opperations on a provided set of coordinate points.
+This project locally deploys a Flask server that performs RESTful 3D geometric operations on a provided set of coordinate points.
 
 ## Available endpoint computations
 ### Bounding Box 
